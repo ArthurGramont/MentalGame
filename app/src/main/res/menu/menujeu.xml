@@ -1,0 +1,32 @@
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/score"
+        android:layout_gravity="start"
+        android:layout_marginStart="16dp"
+        android:checkable="false"
+        android:checked="false"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/item_vie1"
+        android:checkable="false"
+        android:checked="false"
+        android:icon="@drawable/heart_ic"
+        android:title="@string/LIFE_1"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/item_vie2"
+        android:checkable="false"
+        android:checked="false"
+        android:icon="@drawable/heart_ic"
+        android:title="@string/LIFE_2"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/item_vie3"
+        android:checkable="false"
+        android:checked="false"
+        android:icon="@drawable/heart_ic"
+        android:title="@string/LIFE_3"
+        app:showAsAction="always" />
+</menu>

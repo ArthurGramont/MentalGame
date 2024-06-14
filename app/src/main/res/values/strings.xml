@@ -1,3 +1,20 @@
 <resources>
-    <string name="app_name">MentalGame</string>
+    <string name="app_name" translatable="false">MentalGame</string>
+    <string name="BUTTON_GAME" translatable="false">Jouer</string>
+    <string name="BUTTON_SCORE" translatable="false">Scores</string>
+    <string name="LIFE_1" translatable="false">Vie 1</string>
+    <string name="LIFE_2" translatable="false">Vie 2</string>
+    <string name="LIFE_3" translatable="false">Vie 3</string>
+    <string name="bouton_1" translatable="false">1</string>
+    <string name="bouton_2" translatable="false">2</string>
+    <string name="bouton_3" translatable="false">3</string>
+    <string name="bouton_4" translatable="false">4</string>
+    <string name="bouton_5" translatable="false">5</string>
+    <string name="bouton_6" translatable="false">6</string>
+    <string name="bouton_7" translatable="false">7</string>
+    <string name="bouton_8" translatable="false">8</string>
+    <string name="bouton_9" translatable="false">9</string>
+    <string name="bouton_0" translatable="false">0</string>
+    <string name="bouton_suppr" translatable="false">Suppr</string>
+    <string name="bouton_send" translatable="false">Enter</string>
 </resources>
