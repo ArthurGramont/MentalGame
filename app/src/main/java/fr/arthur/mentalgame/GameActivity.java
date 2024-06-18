@@ -15,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.util.Random;
 
+import fr.arthur.mentalgame.database.ScoreBaseHelper;
 import fr.arthur.mentalgame.database.ScoreDao;
 import fr.arthur.mentalgame.entities.Score;
 
@@ -56,6 +57,8 @@ public class GameActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        scoreDao = new ScoreDao(new ScoreBaseHelper(this, "db", 1));
+
         premierTerme = random.nextInt(10);
         deuxiemeTerme = random.nextInt(10);
 
@@ -71,6 +74,9 @@ public class GameActivity extends AppCompatActivity {
         bouton9 = findViewById(R.id.button9);
         boutonEnvoyer = findViewById(R.id.buttonEnter);
         boutonSupprimer = findViewById(R.id.buttonSuppr);
+        textViewResultat = findViewById(R.id.text_resultat);
+        textViewCalcul = findViewById(R.id.text_calcul);
+        textViewResultatUser = findViewById(R.id.text_resultat_user);
 
         bouton0.setOnClickListener(view -> appuieBoutonChiffre((Button) view));
         bouton1.setOnClickListener(view -> appuieBoutonChiffre((Button) view));
@@ -82,8 +88,16 @@ public class GameActivity extends AppCompatActivity {
         bouton7.setOnClickListener(view -> appuieBoutonChiffre((Button) view));
         bouton8.setOnClickListener(view -> appuieBoutonChiffre((Button) view));
         bouton9.setOnClickListener(view -> appuieBoutonChiffre((Button) view));
-        boutonEnvoyer.setOnClickListener(view -> appuieBoutonChiffre((Button) view));
-        boutonSupprimer.setOnClickListener(view -> appuieBoutonChiffre((Button) view));
+        boutonSupprimer.setOnClickListener(suppr -> {
+            textViewResultatUser.setText("");
+            resultatUser = 0;
+        });
+        boutonEnvoyer.setOnClickListener(envoyer -> {
+            faisLeCalcul(premierTerme, deuxiemeTerme);
+            verifCalcul(resultat, resultatUser);
+        });
+
+        textViewCalcul.setText(premierTerme + " + " + deuxiemeTerme);
     }
 
     @Override
@@ -94,14 +108,6 @@ public class GameActivity extends AppCompatActivity {
         itemVie1 = menu.findItem(R.id.item_vie1);
         itemVie2 = menu.findItem(R.id.item_vie2);
         itemVie3 = menu.findItem(R.id.item_vie3);
-        boutonSupprimer.setOnClickListener(suppr -> {
-            textViewResultatUser.setText("");
-            resultatUser = 0;
-        });
-        boutonEnvoyer.setOnClickListener(envoyer -> {
-            faisLeCalcul(premierTerme, deuxiemeTerme);
-            verifCalcul(resultat, resultatUser);
-        });
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -116,11 +122,12 @@ public class GameActivity extends AppCompatActivity {
 
 
     private void ajouterCharactere(Button bouton){
-        textViewCalcul.setText(textViewCalcul.getText().toString() + bouton.getText().toString());
+        textViewResultatUser.setText(textViewResultatUser.getText().toString() + bouton.getText().toString());
     }
 
     private void faisLeCalcul(int a, int b) {
         textViewResultat.setText(String.valueOf(premierTerme + deuxiemeTerme));
+        resultat = premierTerme + deuxiemeTerme;
     }
 
     private void verifCalcul(int resultat, int resultatUser) {
@@ -128,16 +135,31 @@ public class GameActivity extends AppCompatActivity {
             Score score = new Score();
             score.setScore(score.getScore() + 1);
             itemScore.setTitle("Score : " + score.getScore());
+            prochainCalcul();
         } else {
             vie--;
+            modifVie();
+            if (vie == 0) {
+                scoreDao.create(new Score());
+            }
         }
     }
 
     private void prochainCalcul() {
-        premierTerme = random.nextInt();
+        premierTerme = random.nextInt(10);
         deuxiemeTerme = random.nextInt(10);
         textViewCalcul.setText("");
         textViewResultat.setText("");
         textViewResultatUser.setText("");
+    }
+
+    private void modifVie() {
+        if (vie == 2) {
+            itemVie3.setVisible(false);
+        } else if (vie == 1) {
+            itemVie2.setVisible(false);
+        } else if (vie == 0) {
+            itemVie1.setVisible(false);
+        }
     }
 }
