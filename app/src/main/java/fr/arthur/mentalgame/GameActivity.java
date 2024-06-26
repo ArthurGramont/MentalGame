@@ -42,10 +42,11 @@ public class GameActivity extends AppCompatActivity {
     private Integer premierTerme;
     private Integer deuxiemeTerme;
     private Integer resultat;
-    private Integer resultatUser;
+    private Integer resultatUser = 0;
     private ScoreDao scoreDao;
     private Integer vie = 3;
     Random random = new Random();
+    private Integer score = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +94,7 @@ public class GameActivity extends AppCompatActivity {
             resultatUser = 0;
         });
         boutonEnvoyer.setOnClickListener(envoyer -> {
-            faisLeCalcul(premierTerme, deuxiemeTerme);
-            verifCalcul(resultat, resultatUser);
+            afficherCalcul(faisLeCalcul(premierTerme, deuxiemeTerme), resultatUser);
         });
 
         textViewCalcul.setText(premierTerme + " + " + deuxiemeTerme);
@@ -113,44 +113,88 @@ public class GameActivity extends AppCompatActivity {
 
     private void appuieBoutonChiffre(Button bouton){
         ajouterCharactere(bouton);
-        modifierTerme(Integer.parseInt(bouton.getText().toString()));
     }
-
-    private void modifierTerme(Integer aAjouter) {
-        premierTerme = 10 * premierTerme + aAjouter;
-    }
-
 
     private void ajouterCharactere(Button bouton){
         textViewResultatUser.setText(textViewResultatUser.getText().toString() + bouton.getText().toString());
+        try {
+            resultatUser = Integer.parseInt(textViewResultatUser.getText().toString());
+        } catch (NumberFormatException e) {
+            resultatUser = 0;
+        }
     }
 
-    private void faisLeCalcul(int a, int b) {
-        textViewResultat.setText(String.valueOf(premierTerme + deuxiemeTerme));
-        resultat = premierTerme + deuxiemeTerme;
+    private int faisLeCalcul(int a, int b) {
+        resultat = a + b;
+        return resultat;
     }
 
-    private void verifCalcul(int resultat, int resultatUser) {
-        if (resultat == resultatUser) {
-            Score score = new Score();
-            score.setScore(score.getScore() + 1);
-            itemScore.setTitle("Score : " + score.getScore());
-            prochainCalcul();
+    private void afficherCalcul(int resultat, Integer resultatUser) {
+        if (resultatUser == null) {
+            resultatUser = 0;
+        }
+        if (resultat == resultatUser.intValue()) {
+            textViewResultat.setText(String.valueOf(resultat));
+            score++;
+            itemScore.setTitle("Score : " + score);
+            if (score < 10) {
+                prochainCalculEasy();
+            } else if (score < 20) {
+                prochainCalculMedium();
+            } else {
+                prochainCalculHard();
+            }
         } else {
             vie--;
             modifVie();
             if (vie == 0) {
-                scoreDao.create(new Score());
+                // Créer un objet Score avec le score actuel et le sauvegarder
+                Score scoreObject = new Score();
+                scoreObject.setScore(score);  // Assurez-vous que la classe Score a une méthode setScore
+                scoreDao.create(scoreObject);  // Sauvegarde du score dans la base de données
             }
         }
     }
 
-    private void prochainCalcul() {
+    private void prochainCalculEasy() {
         premierTerme = random.nextInt(10);
         deuxiemeTerme = random.nextInt(10);
-        textViewCalcul.setText("");
+        textViewCalcul.setText(premierTerme + " + " + deuxiemeTerme);
+        resetResultats();
+    }
+
+    private void prochainCalculMedium() {
+        premierTerme = random.nextInt(100);
+        deuxiemeTerme = random.nextInt(100);
+        textViewCalcul.setText(premierTerme + " + " + deuxiemeTerme);
+        resetResultats();
+    }
+
+    private void prochainCalculHard() {
+        premierTerme = random.nextInt(1000);
+        deuxiemeTerme = random.nextInt(1000);
+        textViewCalcul.setText(premierTerme + " + " + deuxiemeTerme);
+        resetResultats();
+    }
+
+    private void prochainCalculUltraHard() {
+        premierTerme = random.nextInt(10000);
+        deuxiemeTerme = random.nextInt(10000);
+        textViewCalcul.setText(premierTerme + " + " + deuxiemeTerme);
+        resetResultats();
+    }
+
+    private void prochainCalculImpossible() {
+        premierTerme = random.nextInt(100000);
+        deuxiemeTerme = random.nextInt(100000);
+        textViewCalcul.setText(premierTerme + " + " + deuxiemeTerme);
+        resetResultats();
+    }
+
+    private void resetResultats() {
         textViewResultat.setText("");
         textViewResultatUser.setText("");
+        resultatUser = 0;
     }
 
     private void modifVie() {
