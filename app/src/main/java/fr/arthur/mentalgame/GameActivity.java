@@ -1,5 +1,6 @@
 package fr.arthur.mentalgame;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,6 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.widget.EditText;
+
 
 import java.util.Random;
 
@@ -24,7 +29,6 @@ public class GameActivity extends AppCompatActivity {
     private MenuItem itemVie1;
     private MenuItem itemVie2;
     private MenuItem itemVie3;
-    private TextView textViewResultat;
     private TextView textViewCalcul;
     private TextView textViewResultatUser;
     private Button bouton1;
@@ -60,6 +64,8 @@ public class GameActivity extends AppCompatActivity {
         });
         scoreDao = new ScoreDao(new ScoreBaseHelper(this, "db", 1));
 
+
+
         premierTerme = random.nextInt(10);
         deuxiemeTerme = random.nextInt(10);
 
@@ -75,7 +81,6 @@ public class GameActivity extends AppCompatActivity {
         bouton9 = findViewById(R.id.button9);
         boutonEnvoyer = findViewById(R.id.buttonEnter);
         boutonSupprimer = findViewById(R.id.buttonSuppr);
-        textViewResultat = findViewById(R.id.text_resultat);
         textViewCalcul = findViewById(R.id.text_calcul);
         textViewResultatUser = findViewById(R.id.text_resultat_user);
 
@@ -130,28 +135,69 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void afficherCalcul(int resultat, Integer resultatUser) {
+        Score scoreJoueur = new Score();
         if (resultatUser == null) {
             resultatUser = 0;
         }
         if (resultat == resultatUser.intValue()) {
-            textViewResultat.setText(String.valueOf(resultat));
             score++;
             itemScore.setTitle("Score : " + score);
             if (score < 10) {
                 prochainCalculEasy();
             } else if (score < 20) {
                 prochainCalculMedium();
-            } else {
+            } else if (score < 30) {
                 prochainCalculHard();
+            } else if (score < 40) {
+                prochainCalculUltraHard();
+            } else {
+                prochainCalculImpossible();
             }
         } else {
             vie--;
             modifVie();
             if (vie == 0) {
-                // Créer un objet Score avec le score actuel et le sauvegarder
-                Score scoreObject = new Score();
-                scoreObject.setScore(score);  // Assurez-vous que la classe Score a une méthode setScore
-                scoreDao.create(scoreObject);  // Sauvegarde du score dans la base de données
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Fin de la partie");
+                builder.setMessage("Entrez votre nom (3 caractères) :");
+
+                final EditText input = new EditText(this);
+                builder.setView(input);
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String playerName = input.getText().toString().trim().toUpperCase();
+
+                        if (playerName.length() < 3) {
+                            playerName = String.format("%-3s", playerName).replace(' ', 'X');
+                        } else if (playerName.length() > 3) {
+                            playerName = playerName.substring(0, 3);
+                        }
+
+                        Score scoreJoueur = new Score();
+                        scoreJoueur.setScore(score);
+                        scoreJoueur.setName(playerName);
+                        scoreDao.create(scoreJoueur);
+
+                        Intent intent = new Intent(GameActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+
+                builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+
+                        Intent intent = new Intent(GameActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+
+                builder.show();
             }
         }
     }
@@ -192,7 +238,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void resetResultats() {
-        textViewResultat.setText("");
         textViewResultatUser.setText("");
         resultatUser = 0;
     }

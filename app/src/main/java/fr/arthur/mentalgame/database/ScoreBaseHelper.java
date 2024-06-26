@@ -9,7 +9,7 @@ public class ScoreBaseHelper extends DataBaseHelper {
 
     @Override
     protected String getCreationSql() {
-        return "CREATE TABLE ID NOT EXISTS " + ScoreDao.tableName + " (" +
+        return "CREATE TABLE IF NOT EXISTS " + ScoreDao.tableName + " (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 ScoreDao.score + " INTEGER NOT NULL," +
                 ScoreDao.name + " VARCHAR(3) not null" +
