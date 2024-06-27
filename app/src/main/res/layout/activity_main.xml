@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true"
     android:padding="16dp"
     tools:context=".MainActivity"
-    android:background="@color/background_color">
+    android:background="@color/background">
 
     <TextView
         android:id="@+id/textViewTitle"
@@ -63,23 +63,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:padding="12dp"
-            android:text="Crédits"
-            android:textColor="@color/white"
             android:backgroundTint="@color/button_color"
-            android:textSize="18sp"
-            android:fontFamily="sans-serif-medium" />
+            android:fontFamily="sans-serif-medium"
+            android:padding="12dp"
+            android:text="@string/textViewCreditsTitle"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/bouton_regles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:text="Règles du Jeu"
-            android:textColor="@color/white"
             android:backgroundTint="@color/button_color"
-            android:textSize="18sp"
-            android:fontFamily="sans-serif-medium" />
+            android:fontFamily="sans-serif-medium"
+            android:padding="12dp"
+            android:text="@string/bouton_regles"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
     </LinearLayout>
 

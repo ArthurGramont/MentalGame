@@ -1,0 +1,14 @@
+<resources>
+    <string name="BUTTON_GAME" translatable="false">Chơi</string>
+    <string name="BUTTON_SCORE" translatable="false">Điểm số</string>
+    <string name="LIFE_1" translatable="false">Mạng 1</string>
+    <string name="LIFE_2" translatable="false">Mạng 2</string>
+    <string name="LIFE_3" translatable="false">Mạng 3</string>
+    <string name="bouton_suppr" translatable="false">Xóa</string>
+    <string name="bouton_send" translatable="false">Nhập</string>
+    <string name="textViewCreditsTitle" translatable="false">Credits</string>
+    <string name="textViewCreditsContent" translatable="false">Nhà phát triển: Arthur và Louis\nNhà thiết kế: Arthur và Louis\nNgười kiểm thử: Arthur và Louis\n\nPhiên bản ứng dụng: 1.0.0\n\nCảm ơn đặc biệt:\nCảm ơn tất cả những ai đã đóng góp vào việc phát triển ứng dụng này.\n\nPháp lý:\nTất cả thông tin và hình ảnh trong ứng dụng này được bảo vệ bởi bản quyền.\n\nArthur GRAMONT &amp; Louis PADÉ © 2024</string>
+    <string name="bouton_regles" translatable="false">Quy tắc trò chơi</string>
+    <string name="textViewRegles" translatable="false">\n1. Trò chơi bao gồm việc giải các bài toán tinh thần.\n2. Mỗi trò chơi có nhiều cấp độ khó tăng dần.\n3. Ở mỗi cấp độ, người chơi phải trả lời đúng một câu hỏi để qua cấp độ tiếp theo.\n4. Người chơi kiếm điểm cho mỗi câu trả lời đúng và mất một mạng cho mỗi câu trả lời sai.\n5. Trò chơi kết thúc khi người chơi không còn mạng nào.\n6. Điểm cao nhất được ghi lại cho bảng xếp hạng cuối cùng.\n\nChúc bạn chơi vui vẻ!</string>
+    <string name="textViewTitreScore" translatable="false">ĐIỂM CAO</string>
+</resources>

@@ -4,17 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".CreditsActivity">
 
     <TextView
-        android:id="@+id/textViewCredits"
+        android:id="@+id/textViewCreditsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Crédits : \nDéveloppeur : Arthur et Louis \nDesigner : Arthur et Louis \nMusique : Arthur et Louis \nTesteur : Arthur et Louis"
-        android:textSize="18sp"
-        android:layout_margin="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="32dp"
+        android:text="@string/textViewCreditsTitle"
+        android:textColor="@color/text_color"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewCreditsContent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/rounded_corner_background"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="@string/textViewCreditsContent"
+        android:textColor="@color/text_color"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewCreditsTitle" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
